@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Finance Data Processing API
+  description: API for managing financial records with RBAC logic.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: Local development server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /auth/login:
+    post:
+      summary: User Login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successful login
+  /records:
+    get:
+      summary: Get all records (Analyst, Admin)
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of records returned
+    post:
+      summary: Create a record (Admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                type:
+                  type: string
+                  enum: [income, expense]
+                category:
+                  type: string
+      responses:
+        '201':
+          description: Record created
+  /dashboard/summary:
+    get:
+      summary: Get aggregated dashboard analytics
+      responses:
+        '200':
+          description: Successful analytics object returned
