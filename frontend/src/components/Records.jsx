@@ -11,7 +11,7 @@ export default function Records({ userRole }) {
   const [editForm, setEditForm] = useState({});
 
   const loadRecords = () => {
-    axios.get(`http://localhost:5000/api/records${searchTerm ? `?search=${searchTerm}` : ''}`)
+    axios.get(`/api/records${searchTerm ? `?search=${searchTerm}` : ''}`)
       .then(res => setRecords(res.data.data.records))
       .catch(err => setError(err.response?.data?.message || 'Unauthorized'));
   };
@@ -21,7 +21,7 @@ export default function Records({ userRole }) {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/records', formData);
+      await axios.post('/api/records', formData);
       setFormData({ amount: '', type: 'expense', category: 'General', notes: '' });
       loadRecords();
     } catch(err) { setError(err.response?.data?.message); }
@@ -29,7 +29,7 @@ export default function Records({ userRole }) {
 
   const deleteRecord = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/records/${id}`);
+      await axios.delete(`/api/records/${id}`);
       loadRecords();
     } catch(err) { setError(err.response?.data?.message); }
   }
@@ -38,7 +38,7 @@ export default function Records({ userRole }) {
   const cancelEdit = () => { setEditingId(null); };
   const saveEdit = async (id) => {
     try {
-      await axios.patch(`http://localhost:5000/api/records/${id}`, {
+      await axios.patch(`/api/records/${id}`, {
           amount: editForm.amount, type: editForm.type, category: editForm.category, notes: editForm.notes
       });
       setEditingId(null);

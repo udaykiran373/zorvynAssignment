@@ -6,7 +6,7 @@ export default function Dashboard({ user }) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/dashboard/summary')
+    axios.get('/api/dashboard/summary')
       .then(res => setSummary(res.data.data))
       .catch(err => {
           if (err.response?.status === 403) setError('RBAC Error: Dashboard Access Denied'); 

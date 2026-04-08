@@ -8,6 +8,7 @@ import Records from './components/Records';
 import Users from './components/Users';
 
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 function App() {
   const [error, setError] = useState('');
@@ -22,7 +23,7 @@ function App() {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await axios.post('/api/auth/login', {
           email: authForm.email,
           password: authForm.password
       });
@@ -36,7 +37,7 @@ function App() {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', {
+      const res = await axios.post('/api/auth/register', {
         name: authForm.name || 'Demo Initializer', // auto fallback
         email: authForm.email,
         password: authForm.password,
@@ -54,7 +55,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:5000/api/auth/logout');
+      await axios.get('/api/auth/logout');
       setUser(null); setActiveTab('dashboard');
     } catch(err) { console.error(err); }
   }

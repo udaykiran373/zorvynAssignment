@@ -7,7 +7,7 @@ export default function Users() {
   const [error, setError] = useState('');
 
   const loadUsers = () => {
-    axios.get('http://localhost:5000/api/users')
+    axios.get('/api/users')
       .then(res => setUsers(res.data.data.users))
       .catch(err => setError(err.response?.data?.message || 'Error fetching users'));
   };
@@ -17,7 +17,7 @@ export default function Users() {
   const deleteUser = async (id) => {
     if (!window.confirm("Delete User Permanently?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/users/${id}`);
+      await axios.delete(`/api/users/${id}`);
       loadUsers();
     } catch(err) { setError(err.response?.data?.message); }
   };
