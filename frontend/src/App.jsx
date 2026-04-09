@@ -8,7 +8,7 @@ import Records from './components/Records';
 import Users from './components/Users';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://finance-api-9khq.onrender.com';
 
 function App() {
   const [error, setError] = useState('');
