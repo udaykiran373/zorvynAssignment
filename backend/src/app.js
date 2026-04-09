@@ -23,16 +23,20 @@ try {
     const swaggerFile = fs.readFileSync(path.join(__dirname, './docs/swagger.yaml'), 'utf8');
     const swaggerDocument = yaml.parse(swaggerFile);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-} catch(e) { console.log('Swagger bypass for tests'); }
+} catch (e) { console.log('Swagger bypass for tests'); }
 
 // Middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173', credentials: true })); 
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173', credentials: true }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/', apiLimiter);
 
+
+app.get('/', (req, res) => {
+    res.send('Backend is running 🚀');
+});
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
